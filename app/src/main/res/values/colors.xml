@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#304FFE</color>
+    <color name="colorPrimaryDark">#1c2a44</color>
+    <color name="colorPrimaryBlue">#3171FF</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="navpage">#FFE1E8EB</color>
+    <color name="colorMainTab">#4250D4</color>
+    <color name="transparent">@android:color/transparent</color>
+
+    <color name="header_background">#1c2a44</color>
+    <color name="colorBackground">#FAFBFD</color>
+    <color name="colorGrey">#999999</color>
+    <color name="colorThinGrey">#666666</color>
+    <color name="colorThinBlack">#333333</color>
+    <color name="colorHint">#bbbbbb</color>
+    <color name="colorGreen">#52C41A</color>
+    <color name="colorRed">#ED4841</color>
+    <color name="colorDarkRed">#FF0000</color>
+    <color name="alpha_color_white">#b3ffffff</color>
+    <drawable name="empty">#00FFFFFF</drawable>
+    <drawable name="button_disable">#e6e9ee</drawable>
+    <drawable name="button_enable">#1071e2</drawable>
+    <color name="dialog_bg_color">#F6F8FF</color>
+    <color name="dialog_bg_color_alph">#E6FCFCFC</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorLightBlack">#222222</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorToast">#CC000000</color>
+    <color name="colorNotice">#f86e21</color>
+    <color name="colorNoticeBack">#fdfcec</color>
+    <color name="colorIntermediate">#f11df1</color>
+
+    <color name="console_txt_blue">#4c5cf3</color>
+    <color name="color_status_bar">#304FFE</color>
+
+    <color name="status_bar_background_color">#ffffff</color>
+    <color name="status_bar_background_color_dark">#263b50</color>
+    <color name="autolink_color">#4c5cf3</color>
+
+    <color name="monitor_chart_item_tips_one_color">#1098fe</color>
+    <color name="monitor_chart_item_tips_two_color">#FFA500</color>
+    <color name="alarm_text_dark_grey">#666666</color>
+    <color name="alarm_text_grey">#97a3b4</color>
+    <color name="alarm_area_text_grey">#cccfd4</color>
+    <color name="alarm_area_text_selected">#1071e2</color>
+    <drawable name="color_tab_bg">#fafbfd</drawable>
+    <drawable name="alarm_area_item_selected">#ffffff</drawable>
+
+    <color name="tag_not_set">#bbbbbb</color>
+    <color name="tag_not_enable">#95a0b1</color>
+    <color name="tag_error">#ed4841</color>
+    <color name="tag_work">#52c41a</color>
+    <color name="tag_warning">#f86e21</color>
+
+    <color name="tag_error_bg">#ffa39e</color>
+    <color name="tag_work_bg">#b7eb8f</color>
+    <color name="tag_warning_bg">#fdfcec</color>
+    <color name="router_status_text">#999999</color>
+
+    <drawable name="list_divider_drawable">#e6e9ee</drawable>
+    <color name="list_divider_color">#e6e9ee</color>
+    <color name="tab_txt_color">#97A3B4</color>
+    <color name="coupon_item_grey">#cccccc</color>
+    <color name="coupon_item_thinGrey">#b2b2b2</color>
+    <color name="renew_confirm_dividor_line_bg">#e6e9ee</color>
+
+    <!-- 注册 -->
+    <color name="register_submitbutton_enable_color">#FFFFFF</color>
+    <color name="register_submitbutton_unenable_color">#BBBBBB</color>
+    <drawable name="register_submitbutton_unenable_bg">#e6e9ee</drawable>
+    <color name="bottom_sheet_cancel">#848484</color>
+    <color name="bottom_sheet_list">#2E2D2D</color>
+    <color name="bottom_sheet_list_default">#999999</color>
+    <color name="global_color_bg">#FAFBFD</color>
+    <color name="divide_color">#FAFBFD</color>
+    <color name="blue_word_color">#3383e5</color>
+    <color name="translucency_bg">#a0000000</color>
+    <color name="no_network_warnning">#FFEDEC</color>
+    <color name="no_network_warnning_line">#ED4841</color>
+    <color name="center_color">#52C41A</color>
+    <color name="status_color_1">#AA52C41A</color>
+    <color name="status_color_2">#AAFFEB3D</color>
+    <color name="status_color_3">#F86E21</color>
+    <color name="status_color_4">#AAED4841</color>
+    <color name="status_color_bg">#D8D8D8</color>
+
+    <color name="speedup_details">#3171FE</color>
+    <color name="color_line">#E6E9EE</color>
+    <color name="color_line_white">#4dffffff</color>
+    <color name="color_white_50">#80ffffff</color>
+    <color name="color_white_70">#B3ffffff</color>
+    <color name="color_black_50">#80000000</color>
+
+    <color name="color_blue_4E6AEF">#4E6AEF</color>
+    <color name="color_blue_304FFE">#304FFE</color>
+    <color name="color_blue_1111EE">#1111EE</color>
+    <color name="color_red_E1251B">#E1251B</color>
+    <color name="color_gray_CCCFD4">#B3CCCFD4</color>
+
+    <color name="color_text_212121">#212121</color>
+    <color name="color_text_e5e5e5">#e5e5e5</color>
+    <color name="color_transparent_black">#8c000000</color>
+    <color name="color_edit_4762fe">#4762fe</color>
+    <color name="color_ebfdfdfd">#EBFDFDFD</color>
+    <color name="color_1f767680">#1F767680</color>
+
+    <color name="color_5B72FA">#5B72FA</color>
+    <color name="color_1A1A1A">#1A1A1A</color>
+    <color name="backgroundColor">#f3f6fa</color>
+    <color name="dividing_line_color">#E6E9EE</color>
+    <!--    imagePicker  Start-->
+    <color name="ip_mask_disable">#80FFFFFF</color>
+    <color name="ip_mask_selected">#80000000</color>
+    <color name="ic_back_press">#323336</color>
+    <color name="ip_color_primary">#393A3F</color>
+    <color name="ip_color_primary_dark">#303135</color>
+    <color name="ip_color_primary_trans">#ec2f3335</color>
+    <color name="ip_color_press">#ffe0e0e0</color>
+    <color name="ip_camera_pre">#353535</color>
+    <color name="ip_color_accent">#E1251B</color>
+    <color name="ip_red_from">#FF3A3A</color>
+    <color name="ip_red_to">#FF6C6C</color>
+    <color name="ip_red_dis_from">#80FF3A3A</color>
+    <color name="ip_red_dis_to">#80FF6C6C</color>
+    <color name="ip_text_secondary_inverted">#66ffffff</color>
+    <color name="ip_text_primary_inverted">#ffffff</color>
+    <color name="ip_common_title_black">#030303</color>
+    <color name="ip_grey_bg">#b3b3b3</color>
+
+    <color name="ip_color_status_bar">#2C3049</color>
+
+    <color name="ip_status_bar_background_color">#ffffff</color>
+    <color name="ip_status_bar_background_color_dark">#263b50</color>
+    <color name="ip_colorBackground">#F8F8F8</color>
+    <color name="ip_checkbox_bg">#FF3A3A</color>
+    <color name="ip_colorThinBlack">#ffffff</color>
+
+    <color name="ip_preview_text">#333333</color>
+    <color name="ip_preview_text_dis">#BBBBBB</color>
+    <color name="popuwindow_bg_color">#d9d9d9</color>
+    <!--    imagepicker end-->
+
+
+</resources>
