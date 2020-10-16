@@ -17,7 +17,6 @@ public class AdapterDiffCallback extends DiffUtil.Callback {
         this.mNewData = mNewList;
     }
 
-
     @Override
     public int getOldListSize() {
         return mOldData.size();
@@ -33,14 +32,28 @@ public class AdapterDiffCallback extends DiffUtil.Callback {
         RenderData oldRender = mOldData.get(oldItemPosition);
         RenderData newRender = mNewData.get(newItemPosition);
 
-        return oldRender.getPeerId() == newRender.getPeerId();
+        if (oldRender == null && newRender == null){
+            return true;
+        }
 
+        if (oldRender == null || newRender == null){
+            return false;
+        }
+
+        return oldRender.getPeerId() == newRender.getPeerId();
     }
 
     @Override
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         RenderData oldRender = mOldData.get(oldItemPosition);
         RenderData newRender = mNewData.get(newItemPosition);
+        if (oldRender == null && newRender == null){
+            return true;
+        }
+
+        if (oldRender == null || newRender == null){
+            return false;
+        }
         return oldRender.equals(newRender);
     }
 }

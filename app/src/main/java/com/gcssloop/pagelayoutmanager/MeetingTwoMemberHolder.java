@@ -2,6 +2,7 @@ package com.gcssloop.pagelayoutmanager;
 
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 /**
  * two member holder
@@ -16,6 +17,7 @@ public class MeetingTwoMemberHolder extends AbstractMeetingHolder {
     private static final int LOCAL_IN_BIG = 0;
     private static final int LOCAL_IN_SMALL = 1;
 
+    RelativeLayout rlTwoMember;
     /**
      * 大屏
      */
@@ -35,6 +37,7 @@ public class MeetingTwoMemberHolder extends AbstractMeetingHolder {
 
     @Override
     public void init(View view){
+        rlTwoMember = view.findViewById(R.id.rl_tow_memeber);
         bigView = view.findViewById(R.id.big_view);
         smallView = view.findViewById(R.id.small_view);
 
@@ -43,6 +46,12 @@ public class MeetingTwoMemberHolder extends AbstractMeetingHolder {
 
     @Override
     public void update(RenderData data) {
+        if (data == null){
+            rlTwoMember.setVisibility(View.GONE);
+            return;
+        }
+
+        rlTwoMember.setVisibility(View.VISIBLE);
         if (!data.isLocal()){
             throw new RuntimeException("MeetingTwoMemberHolder update error: is not local");
         }

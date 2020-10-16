@@ -50,12 +50,34 @@ public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
 
     private List<RenderData> renderData = new ArrayList<>();
 
+    private List<RenderData> fillEmptyData = new ArrayList<>();
+
     public List<RenderData> getData() {
         return renderData;
     }
 
+    private void fillEmptyData(List<RenderData> dataList){
+        fillEmptyData = new ArrayList<>(dataList);
+
+        if (dataList.size() <= 1){
+            return;
+        }
+
+        int pageSize = 4;
+        // 远端用户数量
+        int remoteSize = dataList.size() - 1;
+        int temp = remoteSize % 4;
+        if (temp != 0){
+            for (int i = 0; i < pageSize - temp; i++){
+                fillEmptyData.add(null);
+            }
+        }
+    }
+
     public void setData(List<RenderData> data) {
         this.renderData = data;
+
+        fillEmptyData(renderData);
     }
 
     @Override
@@ -125,12 +147,12 @@ public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
     @Override
     public void onBindViewHolder(final AbstractMeetingHolder holder, final int position) {
         Log.i(TAG, "onBindViewHolder = " + position);
-        holder.update(renderData.get(position));
+        holder.update(fillEmptyData.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return renderData.size();
+        return fillEmptyData.size();
     }
 
 }

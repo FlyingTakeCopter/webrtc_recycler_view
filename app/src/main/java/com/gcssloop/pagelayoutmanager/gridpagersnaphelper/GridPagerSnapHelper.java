@@ -237,10 +237,12 @@ public class GridPagerSnapHelper extends SnapHelper {
         int countOfPage = countOfpage(centerPosition);
 //
 //        int currentPageStart = pageIndex * countOfPage;
-
-        return reverseLayout
+        int target = reverseLayout
                 ? (forwardDirection ? currentPageStart - countOfPage : currentPageStart)
                 : (forwardDirection ? currentPageStart + countOfPage : (currentPageStart + countOfPage - 1));
+
+        Log.i(TAG, "findTargetSnapPosition: target = " + target);
+        return target;
     }
 
     @Nullable
@@ -280,6 +282,7 @@ public class GridPagerSnapHelper extends SnapHelper {
                         targetView);
                 final int dx = snapDistances[0];
                 final int dy = snapDistances[1];
+                Log.i(TAG, "onTargetFound: dx = " + dx + " dy = " + dy);
                 final int time = calculateTimeForDeceleration(Math.max(Math.abs(dx), Math.abs(dy)));
                 if (time > 0) {
                     action.update(dx, dy, time, mDecelerateInterpolator);

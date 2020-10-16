@@ -20,6 +20,7 @@ import static android.view.View.VISIBLE;
  */
 public class MeetingTileCellHolder extends AbstractMeetingHolder {
     private static final String TAG = MeetingTileCellHolder.class.getSimpleName();
+    RelativeLayout rlTileCell;
     /**
      * video rect
      */
@@ -53,6 +54,7 @@ public class MeetingTileCellHolder extends AbstractMeetingHolder {
 
     @Override
     public void init(View view) {
+        rlTileCell = view.findViewById(R.id.rl_tile_cell);
         rlVideoView = view.findViewById(R.id.rl_video_view);
         rlCover = view.findViewById(R.id.rl_cover);
         rlHead = view.findViewById(R.id.rl_head);
@@ -63,6 +65,11 @@ public class MeetingTileCellHolder extends AbstractMeetingHolder {
 
     @Override
     public void update(RenderData data) {
+        if (data == null){
+            rlTileCell.setVisibility(GONE);
+            return;
+        }
+        rlTileCell.setVisibility(VISIBLE);
         if (data.isLocal()) {
             throw new RuntimeException("MeetingTileCellHolder update error: is local");
         }

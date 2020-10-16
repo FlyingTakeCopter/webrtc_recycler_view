@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
         // 使用原生的 Adapter 即可
         mAdapter = new MyAdapter();
         mAdapter.getData().add(new RenderData(this, -1, "local", true));
+        mAdapter.setData(mAdapter.getData());
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override public void onChanged() {
                 super.onChanged();
@@ -164,6 +165,22 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
 //        Log.e("lqk", "隐藏" + itemIndex);
 //    }
 
+    // 添加/删除 数据，最后一页需要做补全
+//    private void fillEmptyData(List<RenderData> dataList){
+//        if (dataList.size() <= 1){
+//            return;
+//        }
+//        int pageSize = mRows * mColumns;
+//        // 远端用户数量
+//        int remoteSize = dataList.size() - 1;
+//        int temp = remoteSize % 4;
+//        if (temp != 0){
+//            for (int i = 0; i < pageSize - temp; i++){
+//                dataList.add(null);
+//            }
+//        }
+//    }
+
     int num = 1;
     public void addOne(View view) {
         List<RenderData> newData = new ArrayList<>(mAdapter.getData());
@@ -183,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
     public void removeOne(View view) {
         List<RenderData> newData = new ArrayList<>(mAdapter.getData());
         newData.remove(1);
+//        fillEmptyData(newData);
 
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new AdapterDiffCallback(mAdapter.getData(), newData), false);
         mAdapter.setData(newData);
