@@ -50,13 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
     private static final int MARGIN_BOTTOM_PX = UiUtils.dip2px(66, BaseApplication.getInstance());
     private static final int MARGIN_SPAC_PX = UiUtils.dip2px(3, BaseApplication.getInstance());
 
-//    private List<RenderData> renderData = new ArrayList<>();
-
     private List<RenderData> fillEmptyData = new ArrayList<>();
-
-//    public List<RenderData> getData() {
-//        return renderData;
-//    }
 
     public void updateData(List<RenderData> dataList){
         if (fillEmptyData.isEmpty()){
@@ -108,66 +102,6 @@ public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
         return fillEmptyData;
     }
 
-//    public void setData(List<RenderData> data) {
-//        this.renderData = data;
-//
-//        fillEmptyData(renderData);
-//    }
-
-//    public void add(RenderData data){
-//        if (renderData.isEmpty()){
-//            renderData.add(data);
-//            fillEmptyData = renderData;
-//            return;
-//        }
-//
-//        renderData.add(data);
-//
-//        if (canJoinTwoMember()){
-//            renderData.get(0).setRemoteData(data);
-//            notifyItemChanged(0);
-//        }
-//
-//        List<RenderData> newFillData = fillEmptyData(renderData);
-//
-//        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new AdapterDiffCallback(fillEmptyData, newFillData), false);
-//        fillEmptyData = newFillData;
-//
-//        result.dispatchUpdatesTo(this);
-//    }
-//
-//    public void remove(){
-//        if (renderData.size() <= 1){
-//            return;
-//        }
-//        RenderData data = renderData.get(1);
-//        renderData.remove(data);
-//        if (isInTwoMember(data)){
-//            if (renderData.size() > 1){
-//                renderData.get(0).setRemoteData(renderData.get(1));
-//                // TODO 去订阅
-//            }else {
-//                renderData.get(0).setRemoteData(null);
-//            }
-//            notifyItemChanged(0);
-//        }
-//
-//        List<RenderData> newFillData = fillEmptyData(renderData);
-//
-//        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new AdapterDiffCallback(fillEmptyData, newFillData), false);
-//        fillEmptyData = newFillData;
-//
-//        result.dispatchUpdatesTo(this);
-//    }
-//
-//    private boolean isInTwoMember(RenderData data){
-//        return !renderData.isEmpty() && Objects.equals(renderData.get(0).getRemoteData(), data);
-//    }
-//
-//    private boolean canJoinTwoMember(){
-//        return !renderData.isEmpty() && renderData.get(0).getRemoteData() == null;
-//    }
-
     @Override
     public int getItemViewType(int position) {
         int res = 0;
@@ -175,7 +109,6 @@ public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
             res = ITEM_TWO_MEMBER;
         } else {
             int loc = (position - 1) % 4;
-//            Log.i(TAG, "getItemViewType:" + loc);
             switch (loc) {
                 case 0:
                     res = ITEM_TOP_LEFT;

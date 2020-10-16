@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
  *
  * @author lqk
  */
-public class MeetingTwoMemberHolder extends AbstractMeetingHolder {
+public class MeetingTwoMemberHolder extends AbstractMeetingHolder implements View.OnClickListener {
 
     /**
      * local in which view
@@ -30,6 +30,10 @@ public class MeetingTwoMemberHolder extends AbstractMeetingHolder {
      * show state
      */
     private int state = LOCAL_IN_BIG;
+    /**
+     * 数据
+     */
+    private RenderData data;
 
     MeetingTwoMemberHolder(@NonNull View itemView) {
         super(itemView);
@@ -40,6 +44,7 @@ public class MeetingTwoMemberHolder extends AbstractMeetingHolder {
         rlTwoMember = view.findViewById(R.id.rl_tow_memeber);
         bigView = view.findViewById(R.id.big_view);
         smallView = view.findViewById(R.id.small_view);
+        smallView.setOnClickListener(this);
 
         bigView.setBigView(true);
     }
@@ -50,6 +55,7 @@ public class MeetingTwoMemberHolder extends AbstractMeetingHolder {
             rlTwoMember.setVisibility(View.GONE);
             return;
         }
+        this.data = data;
 
         rlTwoMember.setVisibility(View.VISIBLE);
         if (!data.isLocal()){
@@ -87,5 +93,17 @@ public class MeetingTwoMemberHolder extends AbstractMeetingHolder {
     public void unBindView() {
         bigView.unBindVideo();
         smallView.unBindVideo();
+    }
+
+    @Override
+    public void onClick(View v) {
+        changeShowState();
+    }
+
+    private void changeShowState(){
+        // 切换大小屏状态
+        state = state == LOCAL_IN_BIG ? LOCAL_IN_SMALL : LOCAL_IN_BIG;
+
+        update(data);
     }
 }

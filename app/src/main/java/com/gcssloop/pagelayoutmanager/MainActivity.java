@@ -114,6 +114,21 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
 //        PagerConfig.setShowLog(true);
 //        PagerConfig.setFlingThreshold(2000);
 //        PagerConfig.setMillisecondsPreInch(100f);
+// 显示监听
+        ItemVisibleHelper itemVisibleHelper = new ItemVisibleHelper();
+        itemVisibleHelper.setOnScrollStatusListener(new ItemVisibleHelper.OnScrollStatusListener() {
+            @Override
+            public void onEnter(int position) {
+                Log.i("itemVisibleHelper", "enter: " + position);
+
+            }
+
+            @Override
+            public void onExit(int position) {
+                Log.i("itemVisibleHelper", "exit: " + position);
+            }
+        });
+        itemVisibleHelper.attachToRecycler(mRecyclerView);
 
         // 使用原生的 Adapter 即可
         mAdapter = new MyAdapter();
@@ -129,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
         });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(null);
-        mRecyclerView.addOnScrollListener(recyclerScrollListener);
+//        mRecyclerView.addOnScrollListener(recyclerScrollListener);
 //        mRecyclerView.setHasFixedSize(true);
 //        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
@@ -146,32 +161,32 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
 //        });
     }
 
-    private RecyclerView.OnScrollListener recyclerScrollListener=new RecyclerView.OnScrollListener(){
-        //RecyclerVew
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-        }
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            super.onScrolled(recyclerView, dx, dy);
-            LinearLayoutManager layoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
-            if (layoutManager!=null){
-                int firstVisible = layoutManager.findFirstVisibleItemPosition();
-                int lastVisible = layoutManager.findLastVisibleItemPosition();
-
-                int visibleItemCount = lastVisible - firstVisible;
-                if (lastVisible == 0) {
-                    visibleItemCount = 0;
-                }
-                if (visibleItemCount != 0) {
-                    Log.i("visibleItemCount", "first = " + firstVisible + " last = " + lastVisible);
-//                    dealScrollEvent(firstVisible, lastVisible);
-                }
-            }
-        }
-    };
+//    private RecyclerView.OnScrollListener recyclerScrollListener=new RecyclerView.OnScrollListener(){
+//        //RecyclerVew
+//        @Override
+//        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//            super.onScrollStateChanged(recyclerView, newState);
+//        }
+//
+//        @Override
+//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            super.onScrolled(recyclerView, dx, dy);
+//            LinearLayoutManager layoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
+//            if (layoutManager!=null){
+//                int firstVisible = layoutManager.findFirstVisibleItemPosition();
+//                int lastVisible = layoutManager.findLastVisibleItemPosition();
+//
+//                int visibleItemCount = lastVisible - firstVisible;
+//                if (lastVisible == 0) {
+//                    visibleItemCount = 0;
+//                }
+//                if (visibleItemCount != 0) {
+//                    Log.i("visibleItemCount", "first = " + firstVisible + " last = " + lastVisible);
+////                    dealScrollEvent(firstVisible, lastVisible);
+//                }
+//            }
+//        }
+//    };
 
     @Override public void onPageSizeChanged(int pageSize) {
         mTotal = pageSize;
