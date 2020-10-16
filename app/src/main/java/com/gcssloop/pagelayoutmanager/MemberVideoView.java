@@ -8,6 +8,7 @@ import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class MemberVideoView extends RelativeLayout {
     private static final String TAG = MemberVideoView.class.getSimpleName();
@@ -30,6 +31,8 @@ public class MemberVideoView extends RelativeLayout {
      * loading
      */
     ProgressBar loading;
+
+    TextView tvTitle;
 
     private boolean isBigView;
 
@@ -64,11 +67,13 @@ public class MemberVideoView extends RelativeLayout {
         rlCover = findViewById(R.id.rl_cover);
         rlHead = findViewById(R.id.rl_head);
         loading = findViewById(R.id.progressBar);
+        tvTitle = findViewById(R.id.tv_title);
     }
 
     public void update(RenderData data) {
         this.data = data;
         bindVideo();
+        tvTitle.setText(data.getName());
         // 视频
         if (data.hasVideo()) {
             // 有视频 没有第一帧
@@ -84,6 +89,8 @@ public class MemberVideoView extends RelativeLayout {
             rlHead.setVisibility(VISIBLE);
             loading.setVisibility(GONE);
         }
+
+        data.updateFinish();
     }
 
     public void recycle() {

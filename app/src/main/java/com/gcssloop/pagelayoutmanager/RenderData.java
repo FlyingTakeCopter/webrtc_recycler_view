@@ -44,6 +44,8 @@ public class RenderData {
 
     private boolean renderFirstFrame;
 
+    private boolean needUpdate;
+
     public static final int UNSUBSCRIBE = 0;
     public static final int SUBSCRIBED = 1;
     public static final int SUBSCRIBING = 2;
@@ -54,21 +56,20 @@ public class RenderData {
     private int videoState = UNSUBSCRIBE;
 
     public RenderData(Context context, int peerId, String nickName, boolean isLocal) {
+        needUpdate = true;
         this.peerId = peerId;
         this.name = nickName;
         this.isLocal = isLocal;
         videoView = new SurfaceView(context);
     }
 
-    public void release() {
-//        if (videoView != null) {
-//            videoView.release();
-//            videoView = null;
-//        }
-    }
-
     public int getPeerId() {
         return peerId;
+    }
+
+    public void setName(String name){
+        needUpdate = true;
+        this.name = name;
     }
 
     public String getName() {
@@ -84,6 +85,7 @@ public class RenderData {
     }
 
     public void setStreamId(String streamId, int type) {
+        needUpdate = true;
         if (type == STREAM_VIDEO) {
             this.streamIdV = streamId;
             renderFirstFrame = false;
@@ -111,10 +113,12 @@ public class RenderData {
     }
 
     public void setSubscribeState(int state){
+        needUpdate = true;
         videoState = state;
     }
 
     public void renderFirstFrame() {
+        needUpdate = true;
         // 只有处于订阅中的状态时，才能设置true
         if (isLocal){
             renderFirstFrame = true;
@@ -141,6 +145,7 @@ public class RenderData {
     }
 
     public void setRemoteData(RenderData remoteData) {
+        needUpdate = true;
         this.remoteData = remoteData;
     }
 
@@ -152,24 +157,12 @@ public class RenderData {
         isShow = show;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RenderData that = (RenderData) o;
-        return peerId == that.peerId &&
-                voice == that.voice &&
-                renderFirstFrame == that.renderFirstFrame &&
-                videoState == that.videoState &&
-                Objects.equals(streamIdV, that.streamIdV) &&
-                Objects.equals(streamIdA, that.streamIdA) &&
-                Objects.equals(remoteData, that.remoteData) &&
-                Objects.equals(name, that.name);
+    public boolean needUpdate() {
+        return needUpdate;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(peerId, streamIdV, streamIdA, remoteData, name, voice, renderFirstFrame, videoState);
+    public void updateFinish(){
+        needUpdate = false;
     }
 }
 

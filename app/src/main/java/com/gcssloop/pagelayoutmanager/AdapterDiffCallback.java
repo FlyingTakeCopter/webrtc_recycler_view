@@ -54,6 +54,12 @@ public class AdapterDiffCallback extends DiffUtil.Callback {
         if (oldRender == null || newRender == null){
             return false;
         }
-        return oldRender.equals(newRender);
+
+        boolean res = !newRender.needUpdate();
+        if (newRender.isLocal() && newRender.getRemoteData() != null){
+            return res && !newRender.getRemoteData().needUpdate();
+        }
+
+        return res;
     }
 }

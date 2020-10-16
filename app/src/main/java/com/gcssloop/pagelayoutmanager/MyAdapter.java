@@ -22,6 +22,7 @@
 
 package com.gcssloop.pagelayoutmanager;
 
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
@@ -48,37 +50,123 @@ public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
     private static final int MARGIN_BOTTOM_PX = UiUtils.dip2px(66, BaseApplication.getInstance());
     private static final int MARGIN_SPAC_PX = UiUtils.dip2px(3, BaseApplication.getInstance());
 
-    private List<RenderData> renderData = new ArrayList<>();
+//    private List<RenderData> renderData = new ArrayList<>();
 
     private List<RenderData> fillEmptyData = new ArrayList<>();
 
-    public List<RenderData> getData() {
-        return renderData;
-    }
+//    public List<RenderData> getData() {
+//        return renderData;
+//    }
 
-    private void fillEmptyData(List<RenderData> dataList){
-        fillEmptyData = new ArrayList<>(dataList);
-
-        if (dataList.size() <= 1){
+    public void updateData(List<RenderData> dataList){
+        if (fillEmptyData.isEmpty()){
+            fillEmptyData = new ArrayList<>(dataList);
             return;
         }
 
+        List<RenderData> newFillData = fillEmptyData(dataList);
+
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new AdapterDiffCallback(fillEmptyData, newFillData), false);
+        fillEmptyData = newFillData;
+
+        result.dispatchUpdatesTo(this);
+    }
+
+    private List<RenderData> fillEmptyData(List<RenderData> dataList) {
+        if (dataList.size() <= 1) {
+            return dataList;
+        }
+        // 每页数量
         int pageSize = 4;
         // 远端用户数量
         int remoteSize = dataList.size() - 1;
-        int temp = remoteSize % 4;
-        if (temp != 0){
-            for (int i = 0; i < pageSize - temp; i++){
-                fillEmptyData.add(null);
+        // 最后一页是否有空余
+        int temp = remoteSize % pageSize;
+        // 计算 需要的位置 总数 除了local 包含null占位
+        int fillSize = remoteSize + (temp != 0 ? pageSize - temp : 0);
+        List<RenderData> fillEmptyData = new ArrayList<>(fillSize + 1);
+        // 添加第一页
+        fillEmptyData.add(dataList.get(0));
+        for (int i = 1; i <= fillSize; i++) {
+            // 计算在dataList中是第几个
+            int dataIndex = 0;
+            // i 在当前页的位置编号
+            int fillPageIndex = i % pageSize;
+            // 将  1  3  转成   1  2
+            //     2  4        3  4
+            if (fillPageIndex == 2) {
+                // 左下角
+                dataIndex = i + 1;
+            }else if (fillPageIndex == 3){
+                // 右上角
+                dataIndex = i - 1;
+            }else {
+                dataIndex = i;
             }
+            fillEmptyData.add(dataIndex <= remoteSize ? dataList.get(dataIndex) : null);
         }
+        return fillEmptyData;
     }
 
-    public void setData(List<RenderData> data) {
-        this.renderData = data;
+//    public void setData(List<RenderData> data) {
+//        this.renderData = data;
+//
+//        fillEmptyData(renderData);
+//    }
 
-        fillEmptyData(renderData);
-    }
+//    public void add(RenderData data){
+//        if (renderData.isEmpty()){
+//            renderData.add(data);
+//            fillEmptyData = renderData;
+//            return;
+//        }
+//
+//        renderData.add(data);
+//
+//        if (canJoinTwoMember()){
+//            renderData.get(0).setRemoteData(data);
+//            notifyItemChanged(0);
+//        }
+//
+//        List<RenderData> newFillData = fillEmptyData(renderData);
+//
+//        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new AdapterDiffCallback(fillEmptyData, newFillData), false);
+//        fillEmptyData = newFillData;
+//
+//        result.dispatchUpdatesTo(this);
+//    }
+//
+//    public void remove(){
+//        if (renderData.size() <= 1){
+//            return;
+//        }
+//        RenderData data = renderData.get(1);
+//        renderData.remove(data);
+//        if (isInTwoMember(data)){
+//            if (renderData.size() > 1){
+//                renderData.get(0).setRemoteData(renderData.get(1));
+//                // TODO 去订阅
+//            }else {
+//                renderData.get(0).setRemoteData(null);
+//            }
+//            notifyItemChanged(0);
+//        }
+//
+//        List<RenderData> newFillData = fillEmptyData(renderData);
+//
+//        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new AdapterDiffCallback(fillEmptyData, newFillData), false);
+//        fillEmptyData = newFillData;
+//
+//        result.dispatchUpdatesTo(this);
+//    }
+//
+//    private boolean isInTwoMember(RenderData data){
+//        return !renderData.isEmpty() && Objects.equals(renderData.get(0).getRemoteData(), data);
+//    }
+//
+//    private boolean canJoinTwoMember(){
+//        return !renderData.isEmpty() && renderData.get(0).getRemoteData() == null;
+//    }
 
     @Override
     public int getItemViewType(int position) {
@@ -87,7 +175,7 @@ public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
             res = ITEM_TWO_MEMBER;
         } else {
             int loc = (position - 1) % 4;
-            Log.i(TAG, "getItemViewType:" + loc);
+//            Log.i(TAG, "getItemViewType:" + loc);
             switch (loc) {
                 case 0:
                     res = ITEM_TOP_LEFT;
@@ -155,4 +243,15 @@ public class MyAdapter extends RecyclerView.Adapter<AbstractMeetingHolder> {
         return fillEmptyData.size();
     }
 
+    @Override
+    public void onViewAttachedToWindow(AbstractMeetingHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        Log.i(TAG, "onViewAttachedToWindow");
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(AbstractMeetingHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        Log.i(TAG, "onViewDetachedFromWindow");
+    }
 }

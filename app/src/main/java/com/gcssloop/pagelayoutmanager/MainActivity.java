@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
     private int mColumns = 2;
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
+    private RenderDataManager dataManager;
 //    private PagerGridLayoutManager mLayoutManager;
     private RadioGroup mRadioGroup;
     private TextView mPageTotal;        // 总页数
@@ -116,8 +117,9 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
 
         // 使用原生的 Adapter 即可
         mAdapter = new MyAdapter();
-        mAdapter.getData().add(new RenderData(this, -1, "local", true));
-        mAdapter.setData(mAdapter.getData());
+        dataManager = new RenderDataManager(mAdapter);
+        dataManager.add(new RenderData(this, -1, "local", true));
+//        mAdapter.setData(mAdapter.getData());
         mAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override public void onChanged() {
                 super.onChanged();
@@ -127,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
         });
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(null);
+        mRecyclerView.addOnScrollListener(recyclerScrollListener);
 //        mRecyclerView.setHasFixedSize(true);
 //        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
@@ -143,6 +146,33 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
 //        });
     }
 
+    private RecyclerView.OnScrollListener recyclerScrollListener=new RecyclerView.OnScrollListener(){
+        //RecyclerVew
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            LinearLayoutManager layoutManager= (LinearLayoutManager) recyclerView.getLayoutManager();
+            if (layoutManager!=null){
+                int firstVisible = layoutManager.findFirstVisibleItemPosition();
+                int lastVisible = layoutManager.findLastVisibleItemPosition();
+
+                int visibleItemCount = lastVisible - firstVisible;
+                if (lastVisible == 0) {
+                    visibleItemCount = 0;
+                }
+                if (visibleItemCount != 0) {
+                    Log.i("visibleItemCount", "first = " + firstVisible + " last = " + lastVisible);
+//                    dealScrollEvent(firstVisible, lastVisible);
+                }
+            }
+        }
+    };
+
     @Override public void onPageSizeChanged(int pageSize) {
         mTotal = pageSize;
         Log.e("TAG", "总页数 = " + pageSize);
@@ -155,70 +185,18 @@ public class MainActivity extends AppCompatActivity implements PagerGridLayoutMa
         mPageCurrent.setText("第 " + (pageIndex + 1) + " 页");
     }
 
-//    @Override
-//    public void onItemShow(int itemIndex) {
-//        Log.e("lqk", "显示" + itemIndex);
-//    }
-//
-//    @Override
-//    public void onItemHide(int itemIndex) {
-//        Log.e("lqk", "隐藏" + itemIndex);
-//    }
-
-    // 添加/删除 数据，最后一页需要做补全
-//    private void fillEmptyData(List<RenderData> dataList){
-//        if (dataList.size() <= 1){
-//            return;
-//        }
-//        int pageSize = mRows * mColumns;
-//        // 远端用户数量
-//        int remoteSize = dataList.size() - 1;
-//        int temp = remoteSize % 4;
-//        if (temp != 0){
-//            for (int i = 0; i < pageSize - temp; i++){
-//                dataList.add(null);
-//            }
-//        }
-//    }
-
     int num = 1;
     public void addOne(View view) {
-        List<RenderData> newData = new ArrayList<>(mAdapter.getData());
-        newData.add(new RenderData(this, num, num + "", false));
+        dataManager.add(new RenderData(this, num, num + "", false));
         num++;
-
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new AdapterDiffCallback(mAdapter.getData(), newData), false);
-        mAdapter.setData(newData);
-
-        result.dispatchUpdatesTo(mAdapter);
-
-//        mAdapter.data.add(0, "add");
-//        mAdapter.notifyItemChanged(0);
-//        mAdapter.notifyDataSetChanged();
     }
 
     public void removeOne(View view) {
-        List<RenderData> newData = new ArrayList<>(mAdapter.getData());
-        newData.remove(1);
-//        fillEmptyData(newData);
-
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new AdapterDiffCallback(mAdapter.getData(), newData), false);
-        mAdapter.setData(newData);
-
-        result.dispatchUpdatesTo(mAdapter);
-//        if (mAdapter.data.size() > 0) {
-//            mAdapter.data.remove(0);
-//            mAdapter.notifyDataSetChanged();
-//        }
+        dataManager.remove(1);
     }
 
     public void addMore(View view) {
-//        List<String> data = new ArrayList<>();
-//        for (int i = 1; i <= 5; i++) {
-//            data.add(i + "a");
-//        }
-//        mAdapter.data.addAll(data);
-//        mAdapter.notifyDataSetChanged();
+        dataManager.setStreamId(1, "123", RenderData.STREAM_VIDEO);
     }
 
     @SuppressLint("WrongConstant")

@@ -35,4 +35,5 @@ public abstract class AbstractMeetingHolder extends RecyclerView.ViewHolder {
     public abstract void bindView();
 
     public abstract void unBindView();
+
 }

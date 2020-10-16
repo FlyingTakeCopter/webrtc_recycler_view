@@ -101,6 +101,8 @@ public class MeetingTileCellHolder extends AbstractMeetingHolder {
 
         // 昵称
         tvNickName.setText(data.getName());
+
+        data.updateFinish();
     }
 
     @Override
@@ -147,4 +149,5 @@ public class MeetingTileCellHolder extends AbstractMeetingHolder {
 //            LogUtil.e(TAG, "bindVideo error " + e.toString());
 //        }
     }
+
 }
